@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mahebourg Rider</title>
+
+<style>
+
+body{
+font-family:Arial;
+margin:0;
+background:#f4f6f8;
+color:#17202a;
+}
+
+header{
+background:#111827;
+color:white;
+padding:18px;
+}
+
+main{
+max-width:600px;
+margin:auto;
+padding:15px;
+}
+
+.card{
+background:white;
+padding:16px;
+margin:12px 0;
+border-radius:14px;
+box-shadow:0 2px 10px #0001;
+}
+
+input,select,button{
+width:100%;
+padding:13px;
+margin:7px 0;
+box-sizing:border-box;
+border-radius:9px;
+border:1px solid #ddd;
+}
+
+button{
+background:#16a34a;
+color:white;
+border:0;
+font-weight:bold;
+}
+
+.blue{
+background:#2563eb;
+}
+
+.orange{
+background:#ea580c;
+}
+
+.red{
+background:#dc2626;
+}
+
+.hidden{
+display:none;
+}
+
+.status{
+font-weight:bold;
+font-size:16px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h2>🛵 Mahebourg Rider</h2>
+
+<div>Delivery Panel</div>
+
+</header>
+
+
+<main>
+
+
+<!-- LOGIN -->
+
+<div
+id="login"
+class="card"
+>
+
+<h3>Rider Login</h3>
+
+<select id="rider">
+
+<option value="">
+Select Rider
+</option>
+
+<option value="Rider 1">
+Rider 1
+</option>
+
+<option value="Rider 2">
+Rider 2
+</option>
+
+<option value="Rider 3">
+Rider 3
+</option>
+
+</select>
+
+
+<button onclick="login()">
+
+Login
+
+</button>
+
+
+<p id="message"></p>
+
+</div>
+
+
+
+<!-- RIDER APP -->
+
+<div
+id="app"
+class="hidden"
+>
+
+<div class="card">
+
+<h3 id="riderName"></h3>
+
+<div id="orderCount"></div>
+
+<button
+class="blue"
+onclick="loadOrders()"
+>
+
+🔄 Refresh Orders
+
+</button>
+
+</div>
+
+
+<div id="orders"></div>
+
+</div>
+
+
+</main>
+
+
+
+<script type="module">
+
+
+import {
+initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+
+import {
+getDatabase,
+ref,
+onValue,
+update
+}
+from
+"https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+
+
+
+const firebaseConfig={
+
+apiKey:
+"AIzaSyBZzPmYBJNqio_IDrPn6abTVFoci-7GKtI",
+
+authDomain:
+"delivery-5d936.firebaseapp.com",
+
+databaseURL:
+"https://delivery-5d936-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId:
+"delivery-5d936",
+
+storageBucket:
+"delivery-5d936.firebasestorage.app",
+
+messagingSenderId:
+"980186352754",
+
+appId:
+"1:980186352754:web:02785a4144fd6f174746eb"
+
+};
+
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getDatabase(app);
+
+
+
+let currentRider = "";
+
+
+
+/* LOGIN */
+
+window.login=function(){
+
+const rider =
+document.getElementById("rider").value;
+
+
+if(!rider){
+
+document.getElementById(
+"message"
+).textContent =
+"Please select your rider.";
+
+return;
+
+}
+
+
+currentRider =
+rider;
+
+
+sessionStorage.setItem(
+"rider",
+rider
+);
+
+
+document.getElementById(
+"login"
+).classList.add("hidden");
+
+
+document.getElementById(
+"app"
+).classList.remove("hidden");
+
+
+document.getElementById(
+"riderName"
+).textContent =
+"🛵 " + rider;
+
+
+loadOrders();
+
+};
+
+
+
+/* LOAD ORDERS */
+
+window.loadOrders=function(){
+
+const ordersRef =
+ref(db,"orders");
+
+
+onValue(
+ordersRef,
+(snapshot)=>{
+
+
+const data =
+snapshot.val() || {};
+
+
+const assigned = [];
+
+
+Object.keys(data).forEach(
+function(id){
+
+const order =
+data[id];
+
+
+if(
+order.rider === currentRider &&
+order.status !== "Delivered" &&
+order.status !== "Cancelled"
+){
+
+assigned.push({
+id:id,
+data:order
+});
+
+}
+
+});
+
+
+document.getElementById(
+"orderCount"
+).textContent =
+assigned.length +
+" assigned order(s)";
+
+
+renderOrders(assigned);
+
+});
+
+};
+
+
+
+/* DISPLAY ORDERS */
+
+function renderOrders(list){
+
+const container =
+document.getElementById(
+"orders"
+);
+
+
+if(list.length===0){
+
+container.innerHTML=`
+
+<div class="card">
+
+<h3>🎉 No assigned orders</h3>
+
+<p>
+New orders will appear here
+when Admin assigns them to you.
+</p>
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+
+container.innerHTML =
+list.map(function(item){
+
+const id =
+item.id;
+
+const order =
+item.data;
+
+
+const status =
+order.status || "Rider Assigned";
+
+
+return `
+
+<div class="card">
+
+
+<h3>
+📦 ${id}
+</h3>
+
+
+<p class="status">
+
+Status:
+${status}
+
+</p>
+
+
+<p>
+
+<b>🛒 Grocery Items:</b>
+
+<br>
+
+${order.items || "Not provided"}
+
+</p>
+
+
+
+<p>
+
+<b>📍 Pickup:</b>
+
+<br>
+
+${order.pickupLocation ||
+order.pickup ||
+"Not provided"}
+
+</p>
+
+
+<p>
+
+<b>🏠 Delivery:</b>
+
+<br>
+
+${order.deliveryLocation ||
+order.delivery ||
+"Not provided"}
+
+</p>
+
+
+
+<p>
+
+<b>👤 Customer:</b>
+
+<br>
+
+${order.customerName ||
+order.name ||
+"Customer"}
+
+</p>
+
+
+
+<p>
+
+<b>📞 Phone:</b>
+
+<br>
+
+${order.phone ||
+"Not provided"}
+
+</p>
+
+
+
+<button
+onclick="callCustomer(
+'${order.phone || ""}'
+)"
+>
+
+📞 Call Customer
+
+</button>
+
+
+
+<button
+class="blue"
+onclick="openLocation(
+'${encodeURIComponent(
+order.pickupLocation ||
+order.pickup ||
+""
+)}'
+)"
+>
+
+📍 Pickup Location
+
+</button>
+
+
+
+<button
+class="orange"
+onclick="openLocation(
+'${encodeURIComponent(
+order.deliveryLocation ||
+order.delivery ||
+""
+)}'
+)"
+>
+
+🏠 Delivery Location
+
+</button>
+
+
+
+<button
+onclick="changeStatus(
+'${id}',
+'Picked Up'
+)"
+>
+
+🛒 Picked Up
+
+</button>
+
+
+
+<button
+class="blue"
+onclick="changeStatus(
+'${id}',
+'Out for Delivery'
+)"
+>
+
+🚚 Out for Delivery
+
+</button>
+
+
+
+<button
+onclick="changeStatus(
+'${id}',
+'Delivered'
+)"
+>
+
+✅ Delivered
+
+</button>
+
+
+
+</div>
+
+`;
+
+}).join("");
+
+}
+
+
+
+/* STATUS */
+
+window.changeStatus =
+async function(
+orderID,
+newStatus
+){
+
+await update(
+
+ref(
+db,
+"orders/" + orderID
+),
+
+{
+status:newStatus
+}
+
+);
+
+};
+
+
+
+/* CALL */
+
+window.callCustomer=function(
+phone
+){
+
+if(!phone){
+
+alert(
+"Customer phone number unavailable."
+);
+
+return;
+
+}
+
+
+window.location.href =
+"tel:" + phone;
+
+};
+
+
+
+/* MAP */
+
+window.openLocation=function(
+location
+){
+
+if(!location){
+
+alert(
+"Location unavailable."
+);
+
+return;
+
+}
+
+
+window.open(
+
+"https://www.google.com/maps/search/?api=1&query="
++
+location,
+
+"_blank"
+
+);
+
+};
+
+
+
+/* AUTO LOGIN */
+
+const savedRider =
+sessionStorage.getItem("rider");
+
+
+if(savedRider){
+
+currentRider =
+savedRider;
+
+
+document.getElementById(
+"login"
+).classList.add("hidden");
+
+
+document.getElementById(
+"app"
+).classList.remove("hidden");
+
+
+document.getElementById(
+"riderName"
+).textContent =
+"🛵 " + currentRider;
+
+
+loadOrders();
+
+}
+
+</script>
+
+</body>
+
+</html>a
