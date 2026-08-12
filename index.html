@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Mahebourg Rider</title>
 
 <style>
 
 body{
-font-family:Arial;
+font-family:Arial,sans-serif;
 margin:0;
 background:#f4f6f8;
 color:#17202a;
@@ -35,7 +38,9 @@ border-radius:14px;
 box-shadow:0 2px 10px #0001;
 }
 
-input,select,button{
+input,
+select,
+button{
 width:100%;
 padding:13px;
 margin:7px 0;
@@ -49,6 +54,7 @@ background:#16a34a;
 color:white;
 border:0;
 font-weight:bold;
+cursor:pointer;
 }
 
 .blue{
@@ -63,6 +69,10 @@ background:#ea580c;
 background:#dc2626;
 }
 
+.dark{
+background:#111827;
+}
+
 .hidden{
 display:none;
 }
@@ -72,10 +82,20 @@ font-weight:bold;
 font-size:16px;
 }
 
+.location{
+background:#f8fafc;
+padding:10px;
+border-radius:10px;
+margin-top:8px;
+}
+
 </style>
+
 </head>
 
+
 <body>
+
 
 <header>
 
@@ -96,7 +116,8 @@ id="login"
 class="card"
 >
 
-<h3>Rider Login</h3>
+<h3>🔐 Rider Login</h3>
+
 
 <select id="rider">
 
@@ -119,7 +140,9 @@ Rider 3
 </select>
 
 
-<button onclick="login()">
+<button
+onclick="login()"
+>
 
 Login
 
@@ -139,11 +162,15 @@ id="app"
 class="hidden"
 >
 
+
 <div class="card">
 
 <h3 id="riderName"></h3>
 
-<div id="orderCount"></div>
+<div id="orderCount">
+Loading...
+</div>
+
 
 <button
 class="blue"
@@ -159,6 +186,7 @@ onclick="loadOrders()"
 
 <div id="orders"></div>
 
+
 </div>
 
 
@@ -168,6 +196,8 @@ onclick="loadOrders()"
 
 <script type="module">
 
+
+/* FIREBASE */
 
 import {
 initializeApp
@@ -186,6 +216,8 @@ from
 "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
 
 
+
+/* FIREBASE CONFIG */
 
 const firebaseConfig={
 
@@ -213,6 +245,9 @@ appId:
 };
 
 
+
+/* START FIREBASE */
+
 const app =
 initializeApp(firebaseConfig);
 
@@ -220,6 +255,8 @@ const db =
 getDatabase(app);
 
 
+
+/* CURRENT RIDER */
 
 let currentRider = "";
 
@@ -230,7 +267,9 @@ let currentRider = "";
 window.login=function(){
 
 const rider =
-document.getElementById("rider").value;
+document.getElementById(
+"rider"
+).value;
 
 
 if(!rider){
@@ -238,7 +277,7 @@ if(!rider){
 document.getElementById(
 "message"
 ).textContent =
-"Please select your rider.";
+"❌ Please select your rider.";
 
 return;
 
@@ -257,12 +296,16 @@ rider
 
 document.getElementById(
 "login"
-).classList.add("hidden");
+).classList.add(
+"hidden"
+);
 
 
 document.getElementById(
 "app"
-).classList.remove("hidden");
+).classList.remove(
+"hidden"
+);
 
 
 document.getElementById(
@@ -282,11 +325,16 @@ loadOrders();
 window.loadOrders=function(){
 
 const ordersRef =
-ref(db,"orders");
+ref(
+db,
+"orders"
+);
 
 
 onValue(
+
 ordersRef,
+
 (snapshot)=>{
 
 
@@ -294,10 +342,11 @@ const data =
 snapshot.val() || {};
 
 
-const assigned = [];
+const assigned=[];
 
 
 Object.keys(data).forEach(
+
 function(id){
 
 const order =
@@ -305,14 +354,28 @@ data[id];
 
 
 if(
-order.rider === currentRider &&
-order.status !== "Delivered" &&
-order.status !== "Cancelled"
+
+order.rider ===
+currentRider
+
+&&
+
+order.status !==
+"Delivered"
+
+&&
+
+order.status !==
+"Cancelled"
+
 ){
 
 assigned.push({
+
 id:id,
+
 data:order
+
 });
 
 }
@@ -327,9 +390,13 @@ assigned.length +
 " assigned order(s)";
 
 
-renderOrders(assigned);
+renderOrders(
+assigned
+);
 
-});
+}
+
+);
 
 };
 
@@ -345,7 +412,7 @@ document.getElementById(
 );
 
 
-if(list.length===0){
+if(list.length === 0){
 
 container.innerHTML=`
 
@@ -369,17 +436,42 @@ return;
 
 
 container.innerHTML =
-list.map(function(item){
+
+list.map(
+
+function(item){
+
 
 const id =
 item.id;
+
 
 const order =
 item.data;
 
 
 const status =
-order.status || "Rider Assigned";
+order.status ||
+"Rider Assigned";
+
+
+/* GPS VALUES */
+
+const pickupLat =
+order.pickupLatitude;
+
+
+const pickupLng =
+order.pickupLongitude;
+
+
+const deliveryLat =
+order.deliveryLatitude;
+
+
+const deliveryLng =
+order.deliveryLongitude;
+
 
 
 return `
@@ -388,7 +480,9 @@ return `
 
 
 <h3>
+
 📦 ${id}
+
 </h3>
 
 
@@ -400,71 +494,116 @@ ${status}
 </p>
 
 
+<hr>
+
+
 <p>
 
 <b>🛒 Grocery Items:</b>
 
-<br>
+<br><br>
 
-${order.items || "Not provided"}
+${order.items ||
+"Not provided"}
 
 </p>
 
 
+<div class="location">
 
-<p>
+<b>📍 Pickup Location</b>
 
-<b>📍 Pickup:</b>
+<br><br>
 
-<br>
-
-${order.pickupLocation ||
+${
 order.pickup ||
-"Not provided"}
+order.pickupLocation ||
+"Not provided"
+}
 
-</p>
+</div>
 
 
-<p>
+<!-- PICKUP GPS -->
 
-<b>🏠 Delivery:</b>
+<button
+class="blue"
+onclick="navigateGPS(
+'${pickupLat || ""}',
+'${pickupLng || ""}',
+'pickup'
+)"
+>
 
-<br>
+📍 Navigate to Pickup
 
-${order.deliveryLocation ||
+</button>
+
+
+<div class="location">
+
+<b>🏠 Delivery Location</b>
+
+<br><br>
+
+${
 order.delivery ||
-"Not provided"}
+order.deliveryLocation ||
+"Not provided"
+}
 
-</p>
+</div>
 
+
+<!-- DELIVERY GPS -->
+
+<button
+class="orange"
+onclick="navigateGPS(
+'${deliveryLat || ""}',
+'${deliveryLng || ""}',
+'delivery'
+)"
+>
+
+🏠 Navigate to Customer
+
+</button>
+
+
+<hr>
 
 
 <p>
 
-<b>👤 Customer:</b>
+<b>👤 Customer</b>
 
 <br>
 
-${order.customerName ||
+${
 order.name ||
-"Customer"}
+order.customerName ||
+"Customer"
+}
 
 </p>
-
 
 
 <p>
 
-<b>📞 Phone:</b>
+<b>📞 Phone</b>
 
 <br>
 
-${order.phone ||
-"Not provided"}
+${
+order.phone ||
+"Not provided"
+}
 
 </p>
 
 
+<!-- CALL CUSTOMER -->
 
 <button
 onclick="callCustomer(
@@ -477,39 +616,10 @@ onclick="callCustomer(
 </button>
 
 
-
-<button
-class="blue"
-onclick="openLocation(
-'${encodeURIComponent(
-order.pickupLocation ||
-order.pickup ||
-""
-)}'
-)"
->
-
-📍 Pickup Location
-
-</button>
+<hr>
 
 
-
-<button
-class="orange"
-onclick="openLocation(
-'${encodeURIComponent(
-order.deliveryLocation ||
-order.delivery ||
-""
-)}'
-)"
->
-
-🏠 Delivery Location
-
-</button>
-
+<!-- STATUS BUTTONS -->
 
 
 <button
@@ -522,7 +632,6 @@ onclick="changeStatus(
 🛒 Picked Up
 
 </button>
-
 
 
 <button
@@ -538,7 +647,6 @@ onclick="changeStatus(
 </button>
 
 
-
 <button
 onclick="changeStatus(
 '${id}',
@@ -551,35 +659,93 @@ onclick="changeStatus(
 </button>
 
 
-
 </div>
 
 `;
 
-}).join("");
+}
+
+).join("");
 
 }
 
 
 
-/* STATUS */
+/* GPS NAVIGATION */
 
-window.changeStatus =
-async function(
-orderID,
-newStatus
+window.navigateGPS =
+function(
+lat,
+lng,
+type
 ){
 
-await update(
 
-ref(
-db,
-"orders/" + orderID
+if(!lat || !lng){
+
+/*
+If GPS coordinates are
+not available, use the
+manual address.
+*/
+
+const address =
+type === "pickup"
+
+?
+
+document.querySelector(
+".location"
+)?.innerText
+
+:
+
+"";
+
+
+if(address){
+
+window.open(
+
+"https://www.google.com/maps/search/?api=1&query="
++
+encodeURIComponent(
+address
 ),
 
-{
-status:newStatus
+"_blank"
+
+);
+
+}else{
+
+alert(
+"GPS location is not available."
+);
+
 }
+
+return;
+
+}
+
+
+/* GOOGLE MAPS */
+
+const mapsURL =
+
+"https://www.google.com/maps/dir/?api=1&destination="
++
+lat +
+"," +
+lng;
+
+
+window.open(
+
+mapsURL,
+
+"_blank"
 
 );
 
@@ -587,11 +753,10 @@ status:newStatus
 
 
 
-/* CALL */
+/* CALL CUSTOMER */
 
-window.callCustomer=function(
-phone
-){
+window.callCustomer =
+function(phone){
 
 if(!phone){
 
@@ -611,32 +776,47 @@ window.location.href =
 
 
 
-/* MAP */
+/* CHANGE STATUS */
 
-window.openLocation=function(
-location
+window.changeStatus =
+
+async function(
+orderID,
+newStatus
 ){
 
-if(!location){
+try{
 
-alert(
-"Location unavailable."
-);
 
-return;
+await update(
+
+ref(
+db,
+"orders/" +
+orderID
+),
+
+{
+
+status:
+newStatus
 
 }
 
-
-window.open(
-
-"https://www.google.com/maps/search/?api=1&query="
-+
-location,
-
-"_blank"
-
 );
+
+
+}catch(error){
+
+console.error(
+error
+);
+
+alert(
+"Could not update order."
+);
+
+}
 
 };
 
@@ -645,7 +825,10 @@ location,
 /* AUTO LOGIN */
 
 const savedRider =
-sessionStorage.getItem("rider");
+
+sessionStorage.getItem(
+"rider"
+);
 
 
 if(savedRider){
@@ -656,18 +839,23 @@ savedRider;
 
 document.getElementById(
 "login"
-).classList.add("hidden");
+).classList.add(
+"hidden"
+);
 
 
 document.getElementById(
 "app"
-).classList.remove("hidden");
+).classList.remove(
+"hidden"
+);
 
 
 document.getElementById(
 "riderName"
 ).textContent =
-"🛵 " + currentRider;
+"🛵 " +
+savedRider;
 
 
 loadOrders();
@@ -676,6 +864,7 @@ loadOrders();
 
 </script>
 
+
 </body>
 
-</html>a
+</html>
