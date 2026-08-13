@@ -1,40 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
-
-<meta
-  name="theme-color"
-  content="#0f766e"
->
-
-<title>Mahebourg Rider App</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0f766e">
+<title>Mahebourg Delivery Rider</title>
 
 <style>
-
 *{
   box-sizing:border-box;
 }
 
 body{
   margin:0;
-  font-family:
-    Inter,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    Arial,
-    sans-serif;
-
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,
+  "Segoe UI",Roboto,Arial,sans-serif;
   background:#f5f7f7;
   color:#16302d;
 }
@@ -47,29 +27,17 @@ body{
 }
 
 .header{
-  background:
-    linear-gradient(
-      135deg,
-      #0f766e,
-      #159a8c
-    );
-
+  background:linear-gradient(135deg,#0f766e,#159a8c);
   color:white;
-
   padding:24px 18px;
-
-  border-radius:
-    0 0 25px 25px;
-
-  box-shadow:
-    0 8px 20px
-    rgba(15,118,110,.18);
+  border-radius:0 0 25px 25px;
+  box-shadow:0 8px 20px rgba(15,118,110,.18);
 }
 
 .brand{
   font-size:12px;
   font-weight:800;
-  letter-spacing:.3px;
+  letter-spacing:.4px;
   opacity:.9;
 }
 
@@ -85,20 +53,11 @@ body{
 
 .card{
   background:white;
-
-  border:
-    1px solid
-    #dce7e5;
-
+  border:1px solid #dce7e5;
   border-radius:18px;
-
   padding:16px;
-
   margin-bottom:14px;
-
-  box-shadow:
-    0 8px 24px
-    rgba(15,118,110,.08);
+  box-shadow:0 8px 24px rgba(15,118,110,.08);
 }
 
 .section-title{
@@ -109,45 +68,27 @@ body{
 
 input{
   width:100%;
-
   padding:14px;
-
-  border:
-    1px solid
-    #dce7e5;
-
+  border:1px solid #dce7e5;
   border-radius:13px;
-
   font-size:15px;
-
   margin-bottom:10px;
-
   outline:none;
 }
 
 input:focus{
   border-color:#0f766e;
-
-  box-shadow:
-    0 0 0 3px
-    rgba(15,118,110,.10);
+  box-shadow:0 0 0 3px rgba(15,118,110,.10);
 }
 
 .btn{
   width:100%;
-
   border:0;
-
   border-radius:14px;
-
   padding:14px;
-
   font-size:15px;
-
   font-weight:800;
-
   cursor:pointer;
-
   transition:.2s;
 }
 
@@ -169,14 +110,14 @@ input:focus{
   background:#0b655e;
 }
 
-.secondary{
-  background:#e8f5f3;
-  color:#0f766e;
-}
-
 .accept{
   background:#2563eb;
   color:white;
+}
+
+.secondary{
+  background:#e8f5f3;
+  color:#0f766e;
 }
 
 .logout{
@@ -190,18 +131,9 @@ input:focus{
 
 .status{
   display:inline-block;
-
-  padding:
-    6px 10px;
-
+  padding:6px 10px;
   border-radius:20px;
-
-  background:#fff4d8;
-
-  color:#8a5a00;
-
   font-size:11px;
-
   font-weight:800;
 }
 
@@ -230,135 +162,90 @@ input:focus{
   color:#166534;
 }
 
+.status-other{
+  background:#fff4d8;
+  color:#8a5a00;
+}
+
 .order{
-  border:
-    1px solid
-    #dce7e5;
-
+  border:1px solid #dce7e5;
   border-radius:15px;
-
   padding:14px;
-
   margin-bottom:12px;
-
   background:#fff;
 }
 
 .order-id{
   color:#0f766e;
-
   font-size:18px;
-
   font-weight:900;
 }
 
 .info{
   font-size:13px;
-
   line-height:1.7;
-
   margin-top:10px;
 }
 
 .actions{
   display:grid;
-
   gap:8px;
-
   margin-top:14px;
 }
 
 .error{
   background:#fee2e2;
-
   color:#991b1b;
-
   padding:12px;
-
   border-radius:10px;
-
   font-size:12px;
-
   margin-bottom:10px;
-
-  line-height:1.5;
-
+  line-height:1.55;
   word-break:break-word;
 }
 
 .success{
   background:#dff7ef;
-
   color:#0f766e;
-
   padding:11px;
-
   border-radius:10px;
-
   font-size:12px;
-
   margin-bottom:10px;
-
-  line-height:1.5;
 }
 
 .warning{
   background:#fff7ed;
-
   color:#9a3412;
-
   padding:12px;
-
   border-radius:10px;
-
   font-size:12px;
-
   margin-bottom:10px;
-
-  line-height:1.5;
-}
-
-.empty{
-  padding:22px 16px;
-
-  text-align:center;
-
-  color:#6b7d7a;
-
-  border:
-    1px dashed
-    #dce7e5;
-
-  border-radius:13px;
-
-  line-height:1.6;
+  line-height:1.55;
 }
 
 .profile{
   background:#f0faf8;
-
-  border:
-    1px solid
-    #cbe6e2;
-
+  border:1px solid #cbe6e2;
   border-radius:13px;
-
   padding:13px;
-
   font-size:13px;
-
   line-height:1.8;
-
   margin-bottom:12px;
-
   word-break:break-word;
+}
+
+.empty{
+  padding:22px 16px;
+  text-align:center;
+  color:#6b7d7a;
+  border:1px dashed #dce7e5;
+  border-radius:13px;
+  line-height:1.6;
 }
 
 .loading{
   text-align:center;
-
   padding:18px;
-
   color:#6b7d7a;
 }
 
@@ -366,18 +253,14 @@ input:focus{
   font-size:11px;
   color:#6b7d7a;
   margin-top:8px;
+  line-height:1.5;
 }
-
 </style>
-
 </head>
-
 
 <body>
 
-
 <div class="app">
-
 
 <header class="header">
 
@@ -395,26 +278,22 @@ input:focus{
 <main class="content">
 
 
-<!-- ==================================================
+<!-- =====================================================
      LOGIN
-================================================== -->
+===================================================== -->
 
 <section id="loginView">
 
-
   <div class="card">
-
 
     <div class="section-title">
       Rider Login
     </div>
 
-
     <div
       id="loginError"
       class="error hidden">
     </div>
-
 
     <input
       id="email"
@@ -424,7 +303,6 @@ input:focus{
       value="offacts39@gmail.com"
     >
 
-
     <input
       id="password"
       type="password"
@@ -432,46 +310,36 @@ input:focus{
       autocomplete="current-password"
     >
 
-
     <button
       id="loginButton"
       class="btn primary"
-      onclick="loginRider()"
-    >
+      onclick="loginRider()">
 
       Login
 
     </button>
 
-
     <div class="small">
-
-      Login uses Firebase Authentication.
-
+      Secure login powered by Firebase Authentication.
     </div>
 
-
   </div>
-
 
 </section>
 
 
-
-<!-- ==================================================
+<!-- =====================================================
      DASHBOARD
-================================================== -->
+===================================================== -->
 
 <section
   id="dashboardView"
-  class="hidden"
->
+  class="hidden">
 
 
-  <!-- PROFILE CARD -->
+  <!-- PROFILE -->
 
   <div class="card">
-
 
     <div class="section-title">
 
@@ -500,61 +368,46 @@ input:focus{
 
     <button
       class="btn logout"
-      onclick="logoutRider()"
-    >
+      onclick="logoutRider()">
 
       Logout
 
     </button>
 
-
   </div>
-
 
 
   <!-- ORDERS -->
 
   <div class="card">
 
-
     <div class="section-title">
-
       📦 My Orders
-
     </div>
 
-
-    <div
-      id="ordersList">
+    <div id="ordersList">
 
       <div class="loading">
-
         Loading orders...
-
       </div>
 
     </div>
-
 
   </div>
 
 
 </section>
 
-
 </main>
-
 
 </div>
 
 
-
 <script type="module">
 
-
-/* ==================================================
+/* =====================================================
    FIREBASE IMPORTS
-================================================== */
+===================================================== */
 
 import {
   initializeApp
@@ -587,10 +440,9 @@ from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 
-
-/* ==================================================
+/* =====================================================
    FIREBASE CONFIG
-================================================== */
+===================================================== */
 
 const firebaseConfig = {
 
@@ -621,45 +473,32 @@ const firebaseConfig = {
 };
 
 
-
-/* ==================================================
+/* =====================================================
    INITIALIZE FIREBASE
-================================================== */
+===================================================== */
 
 const app =
-  initializeApp(
-    firebaseConfig
-  );
-
+  initializeApp(firebaseConfig);
 
 const db =
-  getDatabase(
-    app
-  );
-
+  getDatabase(app);
 
 const auth =
-  getAuth(
-    app
-  );
+  getAuth(app);
 
 
-
-/* ==================================================
+/* =====================================================
    GLOBAL VARIABLES
-================================================== */
+===================================================== */
 
-let currentUser =
-  null;
+let currentUser = null;
 
-let stopOrdersListener =
-  null;
+let stopOrdersListener = null;
 
 
-
-/* ==================================================
+/* =====================================================
    LOGIN
-================================================== */
+===================================================== */
 
 async function loginRider(){
 
@@ -668,7 +507,6 @@ async function loginRider(){
       .getElementById("email")
       .value
       .trim();
-
 
   const password =
     document
@@ -686,7 +524,6 @@ async function loginRider(){
     );
 
     return;
-
   }
 
 
@@ -697,20 +534,16 @@ async function loginRider(){
     );
 
     return;
-
   }
 
 
   const button =
-    document
-      .getElementById(
-        "loginButton"
-      );
+    document.getElementById(
+      "loginButton"
+    );
 
 
-  button.disabled =
-    true;
-
+  button.disabled = true;
 
   button.textContent =
     "Logging in...";
@@ -727,24 +560,25 @@ async function loginRider(){
 
 
     console.log(
-      "LOGIN SUCCESS"
+      "Firebase Authentication successful."
     );
 
-
     console.log(
-      "AUTH UID:",
+      "Firebase UID:",
       result.user.uid
     );
 
-
     /*
-      onAuthStateChanged()
-      will automatically continue
-      with profile loading.
+      DO NOT put the UID here.
+
+      Firebase automatically provides:
+      result.user.uid
+
+      onAuthStateChanged() below will
+      load users/<that UID>.
     */
 
   }
-
 
   catch(error){
 
@@ -762,12 +596,9 @@ async function loginRider(){
 
   }
 
-
   finally{
 
-    button.disabled =
-      false;
-
+    button.disabled = false;
 
     button.textContent =
       "Login";
@@ -781,17 +612,15 @@ window.loginRider =
   loginRider;
 
 
-
-/* ==================================================
-   AUTH STATE
-================================================== */
+/* =====================================================
+   FIREBASE AUTH STATE
+===================================================== */
 
 onAuthStateChanged(
 
   auth,
 
   async user => {
-
 
     console.log(
       "AUTH STATE:",
@@ -803,18 +632,13 @@ onAuthStateChanged(
 
     if(!user){
 
-      currentUser =
-        null;
-
+      currentUser = null;
 
       stopOrdersListenerIfNeeded();
 
-
       showLogin();
 
-
       return;
-
     }
 
 
@@ -830,7 +654,6 @@ onAuthStateChanged(
 
     }
 
-
     catch(error){
 
       console.error(
@@ -840,7 +663,6 @@ onAuthStateChanged(
 
 
       stopOrdersListenerIfNeeded();
-
 
       showLogin();
 
@@ -859,37 +681,36 @@ onAuthStateChanged(
 );
 
 
-
-/* ==================================================
+/* =====================================================
    LOAD RIDER PROFILE
-================================================== */
+===================================================== */
 
-async function loadRiderProfile(
-  user
-){
+async function loadRiderProfile(user){
+
+  /*
+    IMPORTANT:
+
+    We NEVER use a hard-coded UID.
+
+    Firebase Authentication gives us
+    the real UID:
+
+      user.uid
+
+    Then we read:
+
+      users/<REAL_FIREBASE_UID>
+  */
+
 
   const uid =
     user.uid;
 
 
   console.log(
-    "AUTHENTICATED UID:",
+    "AUTHENTICATED FIREBASE UID:",
     uid
   );
-
-
-  /*
-    IMPORTANT:
-
-    Profile must exist here:
-
-    users/
-      AUTH_UID/
-        name
-        phone
-        role
-
-  */
 
 
   const profileRef =
@@ -911,19 +732,12 @@ async function loadRiderProfile(
 
   }
 
-
   catch(error){
-
-    /*
-      This is a REAL database
-      permission/network error.
-    */
 
     console.error(
       "PROFILE READ FAILED:",
       error
     );
-
 
     throw error;
 
@@ -937,10 +751,14 @@ async function loadRiderProfile(
 
 
   console.log(
-    "PROFILE:",
+    "PROFILE DATA:",
     snapshot.val()
   );
 
+
+  /* ===================================================
+     PROFILE DOES NOT EXIST
+  =================================================== */
 
   if(!snapshot.exists()){
 
@@ -963,6 +781,10 @@ async function loadRiderProfile(
 
   }
 
+
+  /* ===================================================
+     CHECK ROLE
+  =================================================== */
 
   const role =
     String(
@@ -996,10 +818,9 @@ async function loadRiderProfile(
   }
 
 
-  /*
-    PROFILE IS VALID
-  */
-
+  /* ===================================================
+     RIDER PROFILE VALID
+  =================================================== */
 
   document
     .getElementById(
@@ -1051,6 +872,11 @@ async function loadRiderProfile(
   showDashboard();
 
 
+  /*
+    Load only orders belonging
+    to THIS authenticated UID.
+  */
+
   loadOrders(
     uid
   );
@@ -1058,25 +884,20 @@ async function loadRiderProfile(
 }
 
 
-
-/* ==================================================
+/* =====================================================
    LOAD RIDER ORDERS
-================================================== */
+===================================================== */
 
-function loadOrders(
-  riderUid
-){
+function loadOrders(riderUid){
 
   stopOrdersListenerIfNeeded();
 
 
   /*
-    IMPORTANT:
+    Query:
 
-    Instead of downloading ALL orders,
-    we ask Firebase only for orders
-    whose riderUid equals this rider UID.
-
+    orders
+      where riderUid == Firebase Auth UID
   */
 
   const ordersQuery =
@@ -1099,16 +920,14 @@ function loadOrders(
 
 
   stopOrdersListener =
-
     onValue(
 
       ordersQuery,
 
       snapshot => {
 
-
         console.log(
-          "ORDERS SNAPSHOT:",
+          "ORDERS DATA:",
           snapshot.val()
         );
 
@@ -1117,32 +936,23 @@ function loadOrders(
           snapshot.val() || {};
 
 
-        const orders = [];
-
-
-        Object.entries(
-          data
-        )
-        .forEach(
-          ([key, order]) => {
-
-            orders.push({
+        const orders =
+          Object.entries(
+            data
+          )
+          .map(
+            ([key, order]) => ({
 
               ...order,
 
               key:key
 
-            });
-
-          }
-        );
+            })
+          );
 
 
         orders.sort(
-          (
-            a,
-            b
-          ) => {
+          (a,b) => {
 
             const dateA =
               new Date(
@@ -1171,9 +981,8 @@ function loadOrders(
 
       error => {
 
-
         console.error(
-          "ORDERS READ ERROR:",
+          "ORDERS ERROR:",
           error
         );
 
@@ -1191,18 +1000,16 @@ function loadOrders(
               <br><br>
 
               Error:
-
               ${escapeHtml(
                 error.code ||
                 error.message ||
-                "Unknown error"
+                "Unknown Firebase error"
               )}
 
               <br><br>
 
-              Make sure your Firebase
-              Realtime Database Rules allow
-              this rider to query orders.
+              Check your Firebase
+              Realtime Database Rules.
 
             </div>
 
@@ -1215,10 +1022,30 @@ function loadOrders(
 }
 
 
+/* =====================================================
+   STOP ORDER LISTENER
+===================================================== */
 
-/* ==================================================
+function stopOrdersListenerIfNeeded(){
+
+  if(
+    typeof stopOrdersListener ===
+    "function"
+  ){
+
+    stopOrdersListener();
+
+    stopOrdersListener =
+      null;
+
+  }
+
+}
+
+
+/* =====================================================
    RENDER ORDERS
-================================================== */
+===================================================== */
 
 function renderOrders(
   orders
@@ -1236,7 +1063,7 @@ function renderOrders(
 
       <div class="empty">
 
-        <div style="font-size:32px;">
+        <div style="font-size:34px;">
           📦
         </div>
 
@@ -1244,10 +1071,8 @@ function renderOrders(
 
         <br>
 
-        <span>
-          New orders assigned to you
-          will appear here.
-        </span>
+        New orders assigned to you
+        will appear here.
 
       </div>
 
@@ -1259,7 +1084,6 @@ function renderOrders(
 
 
   root.innerHTML =
-
     orders
       .map(
         order =>
@@ -1272,10 +1096,9 @@ function renderOrders(
 }
 
 
-
-/* ==================================================
-   RENDER ONE ORDER
-================================================== */
+/* =====================================================
+   RENDER SINGLE ORDER
+===================================================== */
 
 function renderSingleOrder(
   order
@@ -1338,11 +1161,9 @@ function renderSingleOrder(
   let buttons = "";
 
 
-  /*
-    NEW / ASSIGNED
-    ----------------
-    Rider can accept.
-  */
+  /* ===================================================
+     NEW / ASSIGNED
+  =================================================== */
 
   if(
     status === "New" ||
@@ -1356,8 +1177,7 @@ function renderSingleOrder(
         onclick="changeStatus(
           '${escapeJs(order.key)}',
           'Accepted'
-        )"
-      >
+        )">
 
         ✅ Accept Order
 
@@ -1368,10 +1188,9 @@ function renderSingleOrder(
   }
 
 
-  /*
-    ACCEPTED
-    ----------------
-  */
+  /* ===================================================
+     ACCEPTED
+  =================================================== */
 
   if(
     status === "Accepted"
@@ -1384,8 +1203,7 @@ function renderSingleOrder(
         onclick="changeStatus(
           '${escapeJs(order.key)}',
           'Picked Up'
-        )"
-      >
+        )">
 
         🛒 Mark Picked Up
 
@@ -1396,10 +1214,9 @@ function renderSingleOrder(
   }
 
 
-  /*
-    PICKED UP
-    ----------------
-  */
+  /* ===================================================
+     PICKED UP
+  =================================================== */
 
   if(
     status === "Picked Up"
@@ -1412,8 +1229,7 @@ function renderSingleOrder(
         onclick="changeStatus(
           '${escapeJs(order.key)}',
           'Out for Delivery'
-        )"
-      >
+        )">
 
         🚚 Start Delivery
 
@@ -1424,10 +1240,9 @@ function renderSingleOrder(
   }
 
 
-  /*
-    OUT FOR DELIVERY
-    ----------------
-  */
+  /* ===================================================
+     OUT FOR DELIVERY
+  =================================================== */
 
   if(
     status === "Out for Delivery"
@@ -1440,8 +1255,7 @@ function renderSingleOrder(
         onclick="changeStatus(
           '${escapeJs(order.key)}',
           'Delivered'
-        )"
-      >
+        )">
 
         ✅ Mark Delivered
 
@@ -1452,9 +1266,9 @@ function renderSingleOrder(
   }
 
 
-  /*
-    DELIVERY LOCATION
-  */
+  /* ===================================================
+     GOOGLE MAPS
+  =================================================== */
 
   const latitude =
     Number(
@@ -1484,8 +1298,7 @@ function renderSingleOrder(
         onclick="openMap(
           ${latitude},
           ${longitude}
-        )"
-      >
+        )">
 
         📍 Open Delivery Location
 
@@ -1514,8 +1327,7 @@ function renderSingleOrder(
 
 
       <span
-        class="status ${statusClass}"
-      >
+        class="status ${statusClass}">
 
         ${escapeHtml(
           status
@@ -1529,7 +1341,6 @@ function renderSingleOrder(
 
         👤
         <b>Customer:</b>
-
         ${escapeHtml(
           customerName
         )}
@@ -1540,7 +1351,6 @@ function renderSingleOrder(
 
         📞
         <b>Phone:</b>
-
         ${escapeHtml(
           phone
         )}
@@ -1551,11 +1361,8 @@ function renderSingleOrder(
 
         🛒
         <b>Items:</b>
-
         ${escapeHtml(
-          typeof items === "object"
-            ? JSON.stringify(items)
-            : items
+          formatValue(items)
         )}
 
 
@@ -1564,7 +1371,6 @@ function renderSingleOrder(
 
         📍
         <b>Pickup:</b>
-
         ${escapeHtml(
           pickup
         )}
@@ -1575,7 +1381,6 @@ function renderSingleOrder(
 
         🏠
         <b>Delivery:</b>
-
         ${escapeHtml(
           delivery
         )}
@@ -1587,14 +1392,13 @@ function renderSingleOrder(
 
           `
 
-          <br>
+            <br>
 
-          📝
-          <b>Note:</b>
-
-          ${escapeHtml(
-            note
-          )}
+            📝
+            <b>Note:</b>
+            ${escapeHtml(
+              note
+            )}
 
           `
 
@@ -1615,11 +1419,11 @@ function renderSingleOrder(
 
         `
 
-        <div class="actions">
+          <div class="actions">
 
-          ${buttons}
+            ${buttons}
 
-        </div>
+          </div>
 
         `
 
@@ -1637,10 +1441,9 @@ function renderSingleOrder(
 }
 
 
-
-/* ==================================================
+/* =====================================================
    CHANGE ORDER STATUS
-================================================== */
+===================================================== */
 
 async function changeStatus(
   orderKey,
@@ -1699,18 +1502,17 @@ async function changeStatus(
 
   try{
 
-
-    /*
-      First verify that this order
-      belongs to the logged-in rider.
-    */
-
     const orderRef =
       ref(
         db,
-        "orders/" + orderKey
+        "orders/" +
+        orderKey
       );
 
+
+    /*
+      Read order first.
+    */
 
     const snapshot =
       await get(
@@ -1733,9 +1535,17 @@ async function changeStatus(
       snapshot.val();
 
 
+    /*
+      SECURITY CHECK:
+
+      Only the rider assigned to
+      this order can change it.
+    */
+
     if(
       String(
-        order.riderUid || ""
+        order.riderUid ||
+        ""
       ) !==
       currentUser.uid
     ){
@@ -1750,7 +1560,7 @@ async function changeStatus(
 
 
     /*
-      Update only status and timestamp.
+      Update only status/timestamp.
     */
 
     await update(
@@ -1778,9 +1588,7 @@ async function changeStatus(
 
     );
 
-
   }
-
 
   catch(error){
 
@@ -1811,10 +1619,9 @@ window.changeStatus =
   changeStatus;
 
 
-
-/* ==================================================
+/* =====================================================
    GOOGLE MAPS
-================================================== */
+===================================================== */
 
 function openMap(
   latitude,
@@ -1831,7 +1638,7 @@ function openMap(
   ){
 
     alert(
-      "Delivery coordinates are not available."
+      "Delivery location is not available."
     );
 
     return;
@@ -1839,16 +1646,15 @@ function openMap(
   }
 
 
-  const url =
+  window.open(
+
     "https://www.google.com/maps?q=" +
     latitude +
     "," +
-    longitude;
+    longitude,
 
-
-  window.open(
-    url,
     "_blank"
+
   );
 
 }
@@ -1858,10 +1664,53 @@ window.openMap =
   openMap;
 
 
+/* =====================================================
+   LOGOUT
+===================================================== */
 
-/* ==================================================
+async function logoutRider(){
+
+  try{
+
+    stopOrdersListenerIfNeeded();
+
+
+    await signOut(
+      auth
+    );
+
+
+    currentUser =
+      null;
+
+
+    showLogin();
+
+  }
+
+  catch(error){
+
+    console.error(
+      "LOGOUT ERROR:",
+      error
+    );
+
+    alert(
+      "Logout failed."
+    );
+
+  }
+
+}
+
+
+window.logoutRider =
+  logoutRider;
+
+
+/* =====================================================
    SHOW LOGIN
-================================================== */
+===================================================== */
 
 function showLogin(){
 
@@ -1887,10 +1736,9 @@ function showLogin(){
 }
 
 
-
-/* ==================================================
+/* =====================================================
    SHOW DASHBOARD
-================================================== */
+===================================================== */
 
 function showDashboard(){
 
@@ -1916,128 +1764,9 @@ function showDashboard(){
 }
 
 
-
-/* ==================================================
-   LOGOUT
-================================================== */
-
-async function logoutRider(){
-
-  try{
-
-    stopOrdersListenerIfNeeded();
-
-
-    await signOut(
-      auth
-    );
-
-
-    currentUser =
-      null;
-
-
-    showLogin();
-
-
-    clearLoginError();
-
-  }
-
-
-  catch(error){
-
-    console.error(
-      "LOGOUT ERROR:",
-      error
-    );
-
-
-    alert(
-      "Logout failed: " +
-      (
-        error.message ||
-        "Unknown error"
-      )
-    );
-
-  }
-
-}
-
-
-window.logoutRider =
-  logoutRider;
-
-
-
-/* ==================================================
-   STOP ORDERS LISTENER
-================================================== */
-
-function stopOrdersListenerIfNeeded(){
-
-  if(
-    typeof stopOrdersListener ===
-    "function"
-  ){
-
-    stopOrdersListener();
-
-  }
-
-
-  stopOrdersListener =
-    null;
-
-}
-
-
-
-/* ==================================================
-   DASHBOARD MESSAGE
-================================================== */
-
-function showMessage(
-  message
-){
-
-  const box =
-    document.getElementById(
-      "dashboardMessage"
-    );
-
-
-  box.innerHTML = `
-
-    <div class="success">
-
-      ${escapeHtml(
-        message
-      )}
-
-    </div>
-
-  `;
-
-
-  setTimeout(
-    () => {
-
-      box.innerHTML =
-        "";
-
-    },
-    3000
-  );
-
-}
-
-
-
-/* ==================================================
+/* =====================================================
    LOGIN ERROR
-================================================== */
+===================================================== */
 
 function showLoginError(
   message
@@ -2050,11 +1779,8 @@ function showLoginError(
 
 
   box.innerHTML =
-
     escapeHtml(
-      String(
-        message
-      )
+      String(message)
     )
     .replace(
       /\n/g,
@@ -2083,38 +1809,199 @@ function clearLoginError(){
 }
 
 
+/* =====================================================
+   DASHBOARD MESSAGE
+===================================================== */
 
-/* ==================================================
-   FIREBASE AUTH ERROR
-================================================== */
-
-function getFirebaseErrorMessage(
-  error
+function showMessage(
+  message
 ){
 
-  const code =
+  const box =
+    document.getElementById(
+      "dashboardMessage"
+    );
+
+
+  box.innerHTML = `
+
+    <div class="success">
+
+      ${escapeHtml(
+        message
+      )}
+
+    </div>
+
+  `;
+
+
+  setTimeout(
+
+    () => {
+
+      box.innerHTML = "";
+
+    },
+
+    3000
+
+  );
+
+}
+
+
+/* =====================================================
+   DATABASE ERROR FORMAT
+===================================================== */
+
+function formatDatabaseError(
+  error,
+  uid
+){
+
+  const message =
     String(
-      error.code ||
+      error.message ||
       ""
     );
 
 
   if(
-    code.includes(
-      "invalid-credential"
-    )
+    message ===
+    "PROFILE_NOT_FOUND"
   ){
 
     return (
-      "Invalid email or password."
+
+      "Rider profile not found.\n\n" +
+
+      "The app is using the REAL Firebase " +
+      "Authentication UID:\n\n" +
+
+      uid +
+
+      "\n\n" +
+
+      "Your Realtime Database must contain:\n\n" +
+
+      "users/" +
+      uid +
+
+      "\n\n" +
+
+      "with:\n" +
+
+      "name: Rider 1\n" +
+
+      "phone: 58591926\n" +
+
+      "role: rider"
+
     );
 
   }
 
 
   if(
+    message ===
+    "PROFILE_EMPTY"
+  ){
+
+    return (
+
+      "The rider profile exists, " +
+      "but it is empty.\n\n" +
+
+      "UID:\n" +
+
+      uid
+
+    );
+
+  }
+
+
+  if(
+    message.startsWith(
+      "ROLE_NOT_RIDER:"
+    )
+  ){
+
+    return (
+
+      "This account does not have rider access.\n\n" +
+
+      "Current role: " +
+
+      message.replace(
+        "ROLE_NOT_RIDER:",
+        ""
+      )
+
+    );
+
+  }
+
+
+  if(
+    error.code ===
+    "PERMISSION_DENIED"
+  ){
+
+    return (
+
+      "Firebase Database permission denied.\n\n" +
+
+      "Check your Realtime Database Rules.\n\n" +
+
+      "Authenticated UID:\n" +
+
+      uid
+
+    );
+
+  }
+
+
+  return (
+
+    "Could not read rider profile.\n\n" +
+
+    "UID:\n" +
+
+    uid +
+
+    "\n\n" +
+
+    "Error:\n" +
+
+    (
+      error.code ||
+      error.message ||
+      "Unknown Firebase error"
+    )
+
+  );
+
+}
+
+
+/* =====================================================
+   FIREBASE AUTH ERROR
+===================================================== */
+
+function getFirebaseErrorMessage(
+  error
+){
+
+  const code =
+    error.code || "";
+
+
+  if(
     code.includes(
-      "invalid-login-credentials"
+      "invalid-credential"
     )
   ){
 
@@ -2145,7 +2032,7 @@ function getFirebaseErrorMessage(
   ){
 
     return (
-      "No Firebase Authentication account exists for this email."
+      "No Firebase account found with this email."
     );
 
   }
@@ -2198,222 +2085,95 @@ function getFirebaseErrorMessage(
 }
 
 
-
-/* ==================================================
-   DATABASE ERROR FORMAT
-================================================== */
-
-function formatDatabaseError(
-  error,
-  uid
-){
-
-  const message =
-    String(
-      error.message ||
-      ""
-    );
-
-
-  const code =
-    String(
-      error.code ||
-      ""
-    );
-
-
-  /*
-    Permission problem
-  */
-
-  if(
-    code.includes(
-      "permission-denied"
-    ) ||
-    message.toLowerCase()
-      .includes(
-        "permission denied"
-      )
-  ){
-
-    return (
-
-      "Firebase Database permission denied.\n\n" +
-
-      "Logged-in UID:\n" +
-
-      uid +
-
-      "\n\n" +
-
-      "Your Firebase Authentication login is working, " +
-
-      "but Realtime Database Rules are blocking access.\n\n" +
-
-      "Check Realtime Database → Rules."
-
-    );
-
-  }
-
-
-  /*
-    Profile genuinely missing
-  */
-
-  if(
-    message ===
-    "PROFILE_NOT_FOUND"
-  ){
-
-    return (
-
-      "Rider profile not found.\n\n" +
-
-      "The logged-in Firebase UID is:\n" +
-
-      uid +
-
-      "\n\n" +
-
-      "Your database must contain:\n\n" +
-
-      "users/" +
-      uid +
-
-      "\n\n" +
-
-      "with at least:\n" +
-
-      "name: Rider 1\n" +
-
-      "phone: 58591926\n" +
-
-      "role: rider"
-
-    );
-
-  }
-
-
-  if(
-    message ===
-    "PROFILE_EMPTY"
-  ){
-
-    return (
-
-      "The rider profile exists, " +
-
-      "but it contains no data."
-
-    );
-
-  }
-
-
-  if(
-    message.startsWith(
-      "ROLE_NOT_RIDER:"
-    )
-  ){
-
-    const role =
-      message
-        .replace(
-          "ROLE_NOT_RIDER:",
-          ""
-        );
-
-
-    return (
-
-      "This Firebase account is not a rider.\n\n" +
-
-      "Current role: " +
-
-      role
-
-    );
-
-  }
-
-
-  return (
-
-    "Firebase profile error.\n\n" +
-
-    "UID:\n" +
-
-    uid +
-
-    "\n\n" +
-
-    "Error:\n" +
-
-    (
-      code ||
-      message ||
-      "Unknown database error"
-    )
-
-  );
-
-}
-
-
-
-/* ==================================================
-   STATUS CSS CLASS
-================================================== */
+/* =====================================================
+   STATUS CLASS
+===================================================== */
 
 function getStatusClass(
   status
 ){
 
   switch(
-    status
+    String(status)
   ){
 
     case "New":
-    case "Assigned":
-
       return "status-new";
 
+    case "Assigned":
+      return "status-new";
 
     case "Accepted":
-
       return "status-accepted";
 
-
     case "Picked Up":
-
       return "status-picked";
 
-
     case "Out for Delivery":
-
       return "status-delivery";
 
-
     case "Delivered":
-
       return "status-delivered";
 
-
     default:
-
-      return "";
+      return "status-other";
 
   }
 
 }
 
 
+/* =====================================================
+   FORMAT VALUE
+===================================================== */
 
-/* ==================================================
+function formatValue(
+  value
+){
+
+  if(
+    value === null ||
+    value === undefined
+  ){
+
+    return "-";
+
+  }
+
+
+  if(
+    typeof value === "object"
+  ){
+
+    try{
+
+      return JSON.stringify(
+        value
+      );
+
+    }
+
+    catch(error){
+
+      return String(
+        value
+      );
+
+    }
+
+  }
+
+
+  return String(
+    value
+  );
+
+}
+
+
+/* =====================================================
    HTML ESCAPE
-================================================== */
+===================================================== */
 
 function escapeHtml(
   value
@@ -2428,20 +2188,11 @@ function escapeHtml(
 
     character => ({
 
-      "&":
-        "&amp;",
-
-      "<":
-        "&lt;",
-
-      ">":
-        "&gt;",
-
-      "'":
-        "&#39;",
-
-      '"':
-        "&quot;"
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      "'":"&#39;",
+      '"':"&quot;"
 
     }[character])
 
@@ -2450,10 +2201,9 @@ function escapeHtml(
 }
 
 
-
-/* ==================================================
+/* =====================================================
    JAVASCRIPT STRING ESCAPE
-================================================== */
+===================================================== */
 
 function escapeJs(
   value
@@ -2462,22 +2212,18 @@ function escapeJs(
   return String(
     value ?? ""
   )
-
   .replace(
     /\\/g,
     "\\\\"
   )
-
   .replace(
     /'/g,
     "\\'"
   )
-
   .replace(
     /\n/g,
     "\\n"
   )
-
   .replace(
     /\r/g,
     "\\r"
@@ -2485,10 +2231,7 @@ function escapeJs(
 
 }
 
-
 </script>
 
-
 </body>
-
 </html>
