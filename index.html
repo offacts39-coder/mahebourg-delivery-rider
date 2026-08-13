@@ -4,10 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0f766e">
-<title>Rider App</title>
+
+<title>Mahebourg Rider App</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
@@ -27,6 +30,7 @@ body{
   color:white;
   padding:24px 18px;
   border-radius:0 0 25px 25px;
+  box-shadow:0 8px 20px rgba(15,118,110,.18);
 }
 
 .brand{
@@ -67,6 +71,12 @@ input{
   border-radius:13px;
   font-size:15px;
   margin-bottom:10px;
+  outline:none;
+}
+
+input:focus{
+  border-color:#0f766e;
+  box-shadow:0 0 0 3px rgba(15,118,110,.1);
 }
 
 .btn{
@@ -77,6 +87,10 @@ input{
   font-size:15px;
   font-weight:800;
   cursor:pointer;
+}
+
+.btn:disabled{
+  opacity:.6;
 }
 
 .primary{
@@ -123,23 +137,25 @@ input{
 
 .info{
   font-size:13px;
-  line-height:1.6;
-  margin-top:8px;
+  line-height:1.65;
+  margin-top:10px;
 }
 
 .actions{
   display:grid;
   gap:8px;
-  margin-top:12px;
+  margin-top:14px;
 }
 
 .error{
   background:#fee2e2;
   color:#991b1b;
-  padding:11px;
+  padding:12px;
   border-radius:10px;
   font-size:12px;
   margin-bottom:10px;
+  line-height:1.5;
+  word-break:break-word;
 }
 
 .success{
@@ -162,11 +178,22 @@ input{
 .debug{
   background:#f3f4f6;
   color:#374151;
-  padding:10px;
+  padding:11px;
   border-radius:10px;
   font-size:11px;
+  line-height:1.5;
   word-break:break-all;
   margin-top:10px;
+}
+
+.profile{
+  background:#f0faf8;
+  border:1px solid #cbe6e2;
+  border-radius:13px;
+  padding:13px;
+  font-size:13px;
+  line-height:1.7;
+  margin-bottom:12px;
 }
 </style>
 </head>
@@ -187,9 +214,7 @@ Rider Dashboard 🛵
 
 </header>
 
-
 <main class="content">
-
 
 <!-- LOGIN -->
 
@@ -210,12 +235,14 @@ class="error hidden">
 id="email"
 type="email"
 placeholder="Rider email"
-value="offacts39@gmail.com">
+value="offacts39@gmail.com"
+>
 
 <input
 id="password"
 type="password"
-placeholder="Password">
+placeholder="Password"
+>
 
 <button
 id="loginButton"
@@ -231,13 +258,11 @@ Login
 </section>
 
 
-
 <!-- DASHBOARD -->
 
 <section
 id="dashboardView"
 class="hidden">
-
 
 <div class="card">
 
@@ -251,10 +276,15 @@ Rider
 
 </div>
 
-
-<div id="dashboardMessage">
+<div
+id="profileBox"
+class="profile">
+Loading profile...
 </div>
 
+<div
+id="dashboardMessage">
+</div>
 
 <button
 class="btn logout"
@@ -265,7 +295,6 @@ Logout
 </button>
 
 </div>
-
 
 
 <div class="card">
@@ -280,18 +309,14 @@ Loading orders...
 
 </div>
 
-
 </section>
-
 
 </main>
 
 </div>
 
 
-
 <script type="module">
-
 
 /* =========================================
    FIREBASE IMPORTS
@@ -303,7 +328,6 @@ import {
 from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
-
 import {
   getDatabase,
   ref,
@@ -314,7 +338,6 @@ import {
 from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
 
-
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -323,7 +346,6 @@ import {
 }
 from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
 
 
 /* =========================================
@@ -359,39 +381,22 @@ const firebaseConfig = {
 };
 
 
-
 /* =========================================
-   FIREBASE INITIALIZE
+   INITIALIZE
 ========================================= */
 
 const app =
-  initializeApp(firebaseConfig);
-
+initializeApp(firebaseConfig);
 
 const db =
-  getDatabase(app);
-
+getDatabase(app);
 
 const auth =
-  getAuth(app);
+getAuth(app);
 
 
-
-/* =========================================
-   RIDER UID
-========================================= */
-
-const RIDER_UID =
-  "BDImNMLTSoTcoqJADn0Lo7WLYPx2";
-
-
-let currentUser =
-  null;
-
-
-let ordersListenerStarted =
-  false;
-
+let currentUser = null;
+let ordersListenerStarted = false;
 
 
 /* =========================================
@@ -406,47 +411,30 @@ async function loginRider(){
     .value
     .trim();
 
-
   const password =
     document
     .getElementById("password")
     .value;
 
-
   const errorBox =
-    document
-    .getElementById("loginError");
-
+    document.getElementById("loginError");
 
   errorBox.classList.add("hidden");
 
-
   if(!email || !password){
 
-    errorBox.textContent =
-      "Please enter email and password.";
-
-    errorBox.classList.remove(
-      "hidden"
+    showError(
+      "Please enter your email and password."
     );
 
     return;
-
   }
 
-
   const button =
-    document
-    .getElementById("loginButton");
+    document.getElementById("loginButton");
 
-
-  button.disabled =
-    true;
-
-
-  button.textContent =
-    "Logging in...";
-
+  button.disabled = true;
+  button.textContent = "Logging in...";
 
   try{
 
@@ -457,25 +445,14 @@ async function loginRider(){
         password
       );
 
-
     console.log(
-      "LOGIN SUCCESS"
+      "AUTHENTICATION SUCCESS"
     );
 
-
     console.log(
-      "Logged-in UID:",
+      "Firebase UID:",
       result.user.uid
     );
-
-
-    /*
-      IMPORTANT:
-      We don't manually reject the user
-      here based on a hard-coded UID.
-      The database profile decides the role.
-    */
-
 
   }
 
@@ -486,36 +463,23 @@ async function loginRider(){
       error
     );
 
-
-    errorBox.textContent =
-      getFirebaseErrorMessage(
-        error
-      );
-
-
-    errorBox.classList.remove(
-      "hidden"
+    showError(
+      getFirebaseErrorMessage(error)
     );
 
   }
 
   finally{
 
-    button.disabled =
-      false;
-
-
-    button.textContent =
-      "Login";
+    button.disabled = false;
+    button.textContent = "Login";
 
   }
 
 }
 
-
 window.loginRider =
-  loginRider;
-
+loginRider;
 
 
 /* =========================================
@@ -528,8 +492,16 @@ onAuthStateChanged(
 
   async user => {
 
+    console.log(
+      "AUTH STATE:",
+      user
+        ? user.uid
+        : "NO USER"
+    );
 
     if(!user){
+
+      currentUser = null;
 
       showLogin();
 
@@ -538,174 +510,37 @@ onAuthStateChanged(
     }
 
 
-    console.log(
-      "AUTH UID:",
-      user.uid
-    );
+    currentUser = user;
 
 
     try{
 
-
-      /*
-        Read:
-
-        users/
-          CURRENT_FIREBASE_UID
-      */
-
-
-      const userRef =
-        ref(
-          db,
-          "users/" + user.uid
-        );
-
-
-      const snapshot =
-        await get(
-          userRef
-        );
-
-
-      console.log(
-        "PROFILE EXISTS:",
-        snapshot.exists()
-      );
-
-
-      console.log(
-        "PROFILE DATA:",
-        snapshot.val()
-      );
-
-
-      /* PROFILE NOT FOUND */
-
-      if(!snapshot.exists()){
-
-        showLogin();
-
-
-        await signOut(
-          auth
-        );
-
-
-        showError(
-
-          "Rider profile not found.\n\n" +
-
-          "Firebase Authentication UID:\n" +
-
-          user.uid +
-
-          "\n\nMake sure this exact UID exists under:\n" +
-
-          "Realtime Database → users"
-
-        );
-
-
-        return;
-
-      }
-
-
-      const profile =
-        snapshot.val();
-
-
-      console.log(
-        "PROFILE ROLE:",
-        profile.role
-      );
-
-
-      /* ROLE CHECK */
-
-      if(
-        String(
-          profile.role || ""
-        ).toLowerCase() !==
-        "rider"
-      ){
-
-        showLogin();
-
-
-        await signOut(
-          auth
-        );
-
-
-        showError(
-
-          "This account does not have rider access.\n\n" +
-
-          "Current role: " +
-
-          String(
-            profile.role || "not found"
-          )
-
-        );
-
-
-        return;
-
-      }
-
-
-      /* RIDER LOGIN SUCCESS */
-
-      currentUser =
-        user;
-
-
-      document.getElementById(
-        "riderName"
-      ).textContent =
-        profile.name ||
-        "Rider";
-
-
-      showDashboard();
-
-
-      loadOrders(
-        user.uid
+      await loadRiderProfile(
+        user
       );
 
     }
 
-
     catch(error){
 
       console.error(
-        "RIDER PROFILE ERROR:",
+        "PROFILE LOAD ERROR:",
         error
       );
 
-
       showLogin();
 
-
       showError(
-
-        "Could not read rider profile.\n\n" +
-
-        "Error code: " +
-
-        String(
+        "Firebase profile error\n\n" +
+        "UID: " +
+        user.uid +
+        "\n\n" +
+        "Error: " +
+        (
           error.code ||
-          "unknown"
-        ) +
-
-        "\n\nUID:\n" +
-
-        user.uid
-
+          error.message ||
+          "Unknown error"
+        )
       );
 
     }
@@ -715,6 +550,290 @@ onAuthStateChanged(
 );
 
 
+/* =========================================
+   LOAD RIDER PROFILE
+========================================= */
+
+async function loadRiderProfile(user){
+
+  const uid =
+    user.uid;
+
+  console.log(
+    "Reading profile:",
+    "users/" + uid
+  );
+
+
+  /*
+    FIRST:
+    Read exact UID path
+  */
+
+  const exactRef =
+    ref(
+      db,
+      "users/" + uid
+    );
+
+
+  const exactSnapshot =
+    await get(
+      exactRef
+    );
+
+
+  console.log(
+    "Exact profile exists:",
+    exactSnapshot.exists()
+  );
+
+  console.log(
+    "Exact profile:",
+    exactSnapshot.val()
+  );
+
+
+  if(exactSnapshot.exists()){
+
+    const profile =
+      exactSnapshot.val();
+
+    await finishRiderLogin(
+      user,
+      profile
+    );
+
+    return;
+
+  }
+
+
+  /*
+    SECOND:
+    If exact path does not exist,
+    read users node and search UID.
+  */
+
+  console.log(
+    "Exact UID profile not found."
+  );
+
+  const usersRef =
+    ref(
+      db,
+      "users"
+    );
+
+  const usersSnapshot =
+    await get(
+      usersRef
+    );
+
+  console.log(
+    "Users node exists:",
+    usersSnapshot.exists()
+  );
+
+
+  if(!usersSnapshot.exists()){
+
+    throw new Error(
+      "The users node does not exist."
+    );
+
+  }
+
+
+  const users =
+    usersSnapshot.val() || {};
+
+  console.log(
+    "Users found:",
+    Object.keys(users)
+  );
+
+
+  /*
+    Search exact UID among users
+  */
+
+  let profile =
+    users[uid];
+
+
+  if(profile){
+
+    await finishRiderLogin(
+      user,
+      profile
+    );
+
+    return;
+
+  }
+
+
+  /*
+    Nothing found.
+  */
+
+  const availableUIDs =
+    Object.keys(users);
+
+
+  showLogin();
+
+  await signOut(
+    auth
+  );
+
+
+  showError(
+
+    "Rider profile not found.\n\n" +
+
+    "Firebase Authentication UID:\n" +
+
+    uid +
+
+    "\n\n" +
+
+    "UIDs currently inside users:\n" +
+
+    (
+      availableUIDs.length
+      ? availableUIDs.join("\n")
+      : "NO USERS FOUND"
+    )
+
+  );
+
+}
+
+
+/* =========================================
+   FINISH RIDER LOGIN
+========================================= */
+
+async function finishRiderLogin(
+  user,
+  profile
+){
+
+  console.log(
+    "RIDER PROFILE:",
+    profile
+  );
+
+
+  if(!profile){
+
+    throw new Error(
+      "Profile data is empty."
+    );
+
+  }
+
+
+  const role =
+    String(
+      profile.role || ""
+    )
+    .trim()
+    .toLowerCase();
+
+
+  console.log(
+    "RIDER ROLE:",
+    role
+  );
+
+
+  if(role !== "rider"){
+
+    showLogin();
+
+    await signOut(
+      auth
+    );
+
+    showError(
+
+      "This account does not have rider access.\n\n" +
+
+      "Current role: " +
+
+      (
+        profile.role ||
+        "not found"
+      )
+
+    );
+
+    return;
+
+  }
+
+
+  currentUser =
+    user;
+
+
+  document.getElementById(
+    "riderName"
+  ).textContent =
+    profile.name ||
+    "Rider";
+
+
+  document.getElementById(
+    "profileBox"
+  ).innerHTML =
+
+  `
+
+  <b>Rider:</b>
+  ${escapeHtml(
+    profile.name ||
+    "Rider"
+  )}
+
+  <br>
+
+  <b>Phone:</b>
+  ${escapeHtml(
+    profile.phone ||
+    "-"
+  )}
+
+  <br>
+
+  <b>Role:</b>
+  ${escapeHtml(
+    profile.role ||
+    "-"
+  )}
+
+  <br>
+
+  <b>UID:</b>
+  ${escapeHtml(
+    user.uid
+  )}
+
+  `;
+
+
+  showDashboard();
+
+
+  loadOrders(
+    user.uid
+  );
+
+}
+
 
 /* =========================================
    SHOW LOGIN
@@ -723,26 +842,16 @@ onAuthStateChanged(
 function showLogin(){
 
   document
-  .getElementById(
-    "loginView"
-  )
+  .getElementById("loginView")
   .classList
-  .remove(
-    "hidden"
-  );
-
+  .remove("hidden");
 
   document
-  .getElementById(
-    "dashboardView"
-  )
+  .getElementById("dashboardView")
   .classList
-  .add(
-    "hidden"
-  );
+  .add("hidden");
 
 }
-
 
 
 /* =========================================
@@ -752,51 +861,37 @@ function showLogin(){
 function showDashboard(){
 
   document
-  .getElementById(
-    "loginView"
-  )
+  .getElementById("loginView")
   .classList
-  .add(
-    "hidden"
-  );
-
+  .add("hidden");
 
   document
-  .getElementById(
-    "dashboardView"
-  )
+  .getElementById("dashboardView")
   .classList
-  .remove(
-    "hidden"
-  );
+  .remove("hidden");
 
 }
-
 
 
 /* =========================================
    SHOW ERROR
 ========================================= */
 
-function showError(
-  message
-){
+function showError(message){
 
   const box =
     document.getElementById(
       "loginError"
     );
 
-
   box.innerHTML =
     escapeHtml(
-      message
+      String(message)
     )
     .replace(
       /\n/g,
       "<br>"
     );
-
 
   box.classList.remove(
     "hidden"
@@ -805,14 +900,23 @@ function showError(
 }
 
 
-
 /* =========================================
-   LOAD ASSIGNED ORDERS
+   LOAD ORDERS
 ========================================= */
 
 function loadOrders(
   riderUid
 ){
+
+  if(ordersListenerStarted){
+
+    return;
+
+  }
+
+  ordersListenerStarted =
+    true;
+
 
   const ordersRef =
     ref(
@@ -827,10 +931,8 @@ function loadOrders(
 
     snapshot => {
 
-
       const data =
-        snapshot.val() ||
-        {};
+        snapshot.val() || {};
 
 
       const orders =
@@ -840,38 +942,28 @@ function loadOrders(
         )
 
         .map(
-
           ([key,order]) => ({
 
             ...order,
-
             key:key
 
           })
-
         )
 
         .filter(
-
           order =>
-
             order.riderUid ===
             riderUid
-
         )
 
         .sort(
-
           (a,b) =>
-
             new Date(
               b.createdAt || 0
             ) -
-
             new Date(
               a.createdAt || 0
             )
-
         );
 
 
@@ -879,17 +971,14 @@ function loadOrders(
         orders
       );
 
-
     },
 
     error => {
-
 
       console.error(
         "ORDERS ERROR:",
         error
       );
-
 
       document.getElementById(
         "ordersList"
@@ -906,6 +995,7 @@ function loadOrders(
       Error:
       ${escapeHtml(
         error.code ||
+        error.message ||
         "Unknown error"
       )}
 
@@ -918,7 +1008,6 @@ function loadOrders(
   );
 
 }
-
 
 
 /* =========================================
@@ -957,19 +1046,102 @@ function renderOrders(
   root.innerHTML =
 
     orders.map(
-
       order => {
-
 
         const status =
           order.status ||
           "New";
 
 
+        let buttons = "";
+
+
+        if(status === "Accepted"){
+
+          buttons += `
+
+          <button
+          class="btn primary"
+          onclick="changeStatus(
+            '${escapeHtml(order.key)}',
+            'Picked Up'
+          )">
+
+          🛒 Mark Picked Up
+
+          </button>
+
+          `;
+
+        }
+
+
+        if(status === "Picked Up"){
+
+          buttons += `
+
+          <button
+          class="btn primary"
+          onclick="changeStatus(
+            '${escapeHtml(order.key)}',
+            'Out for Delivery'
+          )">
+
+          🚚 Start Delivery
+
+          </button>
+
+          `;
+
+        }
+
+
+        if(status === "Out for Delivery"){
+
+          buttons += `
+
+          <button
+          class="btn primary"
+          onclick="changeStatus(
+            '${escapeHtml(order.key)}',
+            'Delivered'
+          )">
+
+          ✅ Mark Delivered
+
+          </button>
+
+          `;
+
+        }
+
+
+        if(
+          order.deliveryLatitude != null &&
+          order.deliveryLongitude != null
+        ){
+
+          buttons += `
+
+          <button
+          class="btn secondary"
+          onclick="openMap(
+            ${Number(order.deliveryLatitude)},
+            ${Number(order.deliveryLongitude)}
+          )">
+
+          📍 Open Delivery Location
+
+          </button>
+
+          `;
+
+        }
+
+
         return `
 
         <div class="order">
-
 
           <div class="order-id">
 
@@ -979,9 +1151,7 @@ function renderOrders(
 
           </div>
 
-
           <br>
-
 
           <span class="status">
 
@@ -991,233 +1161,76 @@ function renderOrders(
 
           </span>
 
-
           <div class="info">
 
-
             👤 <b>Customer:</b>
-
             ${escapeHtml(
               order.name
             )}
 
-
             <br>
 
-
             📞 <b>Phone:</b>
-
             ${escapeHtml(
               order.phone
             )}
 
-
             <br><br>
 
-
             🛒 <b>Items:</b>
-
             ${escapeHtml(
               order.items
             )}
 
-
             <br><br>
 
-
             📍 <b>Pickup:</b>
-
             ${escapeHtml(
               order.pickup
             )}
 
-
             <br>
 
-
             🏠 <b>Delivery:</b>
-
             ${escapeHtml(
               order.delivery
             )}
 
-
             ${
               order.note
-
               ?
-
               `
-
               <br>
-
               📝 <b>Note:</b>
-
               ${escapeHtml(
                 order.note
               )}
-
               `
-
               :
-
               ""
-
             }
 
-
           </div>
-
 
           <div class="actions">
 
-
-            ${
-              status === "Accepted"
-
-              ?
-
-              `
-
-              <button
-
-              class="btn primary"
-
-              onclick="changeStatus(
-                '${escapeHtml(
-                  order.key
-                )}',
-                'Picked Up'
-              )">
-
-              🛒 Mark Picked Up
-
-              </button>
-
-              `
-
-              :
-
-              ""
-
-            }
-
-
-            ${
-              status === "Picked Up"
-
-              ?
-
-              `
-
-              <button
-
-              class="btn primary"
-
-              onclick="changeStatus(
-                '${escapeHtml(
-                  order.key
-                )}',
-                'Out for Delivery'
-              )">
-
-              🚚 Start Delivery
-
-              </button>
-
-              `
-
-              :
-
-              ""
-
-            }
-
-
-            ${
-              status === "Out for Delivery"
-
-              ?
-
-              `
-
-              <button
-
-              class="btn primary"
-
-              onclick="changeStatus(
-                '${escapeHtml(
-                  order.key
-                )}',
-                'Delivered'
-              )">
-
-              ✅ Mark Delivered
-
-              </button>
-
-              `
-
-              :
-
-              ""
-
-            }
-
-
-            ${
-              order.deliveryLatitude &&
-              order.deliveryLongitude
-
-              ?
-
-              `
-
-              <button
-
-              class="btn secondary"
-
-              onclick="openMap(
-                ${Number(
-                  order.deliveryLatitude
-                )},
-                ${Number(
-                  order.deliveryLongitude
-                )}
-              )">
-
-              📍 Open Delivery Location
-
-              </button>
-
-              `
-
-              :
-
-              ""
-
-            }
-
+            ${buttons}
 
           </div>
-
 
         </div>
 
         `;
 
       }
-
     )
-
     .join("");
 
 }
 
 
-
 /* =========================================
-   CHANGE ORDER STATUS
+   CHANGE STATUS
 ========================================= */
 
 async function changeStatus(
@@ -1237,7 +1250,6 @@ async function changeStatus(
 
 
   try{
-
 
     await update(
 
@@ -1264,25 +1276,22 @@ async function changeStatus(
       status
     );
 
-
   }
 
   catch(error){
 
     console.error(
-      "STATUS UPDATE ERROR:",
+      "STATUS ERROR:",
       error
     );
-
 
     alert(
 
       "Could not update order.\n\n" +
 
-      "Error: " +
-
       (
         error.code ||
+        error.message ||
         "Unknown error"
       )
 
@@ -1292,14 +1301,12 @@ async function changeStatus(
 
 }
 
-
 window.changeStatus =
-  changeStatus;
-
+changeStatus;
 
 
 /* =========================================
-   DASHBOARD MESSAGE
+   MESSAGE
 ========================================= */
 
 function showMessage(
@@ -1311,16 +1318,15 @@ function showMessage(
       "dashboardMessage"
     );
 
-
   box.innerHTML =
 
   `
 
   <div class="success">
 
-    ${escapeHtml(
-      message
-    )}
+  ${escapeHtml(
+    message
+  )}
 
   </div>
 
@@ -1328,24 +1334,17 @@ function showMessage(
 
 
   setTimeout(
-
     () => {
-
-      box.innerHTML =
-        "";
-
+      box.innerHTML = "";
     },
-
     3000
-
   );
 
 }
 
 
-
 /* =========================================
-   OPEN GOOGLE MAP
+   GOOGLE MAP
 ========================================= */
 
 function openMap(
@@ -1366,10 +1365,8 @@ function openMap(
 
 }
 
-
 window.openMap =
-  openMap;
-
+openMap;
 
 
 /* =========================================
@@ -1383,6 +1380,12 @@ async function logoutRider(){
     await signOut(
       auth
     );
+
+    currentUser =
+      null;
+
+    ordersListenerStarted =
+      false;
 
     showLogin();
 
@@ -1399,14 +1402,12 @@ async function logoutRider(){
 
 }
 
-
 window.logoutRider =
-  logoutRider;
-
+logoutRider;
 
 
 /* =========================================
-   FIREBASE ERROR MESSAGE
+   FIREBASE ERROR
 ========================================= */
 
 function getFirebaseErrorMessage(
@@ -1423,9 +1424,7 @@ function getFirebaseErrorMessage(
     )
   ){
 
-    return(
-      "Invalid email or password."
-    );
+    return "Invalid email or password.";
 
   }
 
@@ -1436,9 +1435,7 @@ function getFirebaseErrorMessage(
     )
   ){
 
-    return(
-      "Invalid email address."
-    );
+    return "Invalid email address.";
 
   }
 
@@ -1449,9 +1446,7 @@ function getFirebaseErrorMessage(
     )
   ){
 
-    return(
-      "No Firebase account found with this email."
-    );
+    return "No Firebase account found with this email.";
 
   }
 
@@ -1462,9 +1457,7 @@ function getFirebaseErrorMessage(
     )
   ){
 
-    return(
-      "Incorrect password."
-    );
+    return "Incorrect password.";
 
   }
 
@@ -1475,14 +1468,12 @@ function getFirebaseErrorMessage(
     )
   ){
 
-    return(
-      "Too many login attempts. Please try again later."
-    );
+    return "Too many login attempts. Please try again later.";
 
   }
 
 
-  return(
+  return (
     error.message ||
     "Login failed."
   );
@@ -1490,9 +1481,8 @@ function getFirebaseErrorMessage(
 }
 
 
-
 /* =========================================
-   HTML ESCAPE
+   ESCAPE HTML
 ========================================= */
 
 function escapeHtml(
@@ -1509,13 +1499,9 @@ function escapeHtml(
     character => ({
 
       "&":"&amp;",
-
       "<":"&lt;",
-
       ">":"&gt;",
-
       "'":"&#39;",
-
       '"':"&quot;"
 
     }[character])
